@@ -59,6 +59,7 @@
           <div v-if="this.index==1" class="ad_data">
             <div class="data"><label>借阅号</label><input type="text" v-model="addUserLendNum"/></div>
             <div class="data"><label>用户ID</label><input type="text" v-model="addUserId"/></div>
+            <div class="data"><label>姓名</label><input type="text" v-model="addUserName"/></div>
             <div class="data"><label>学院</label><input type="text" v-model="addUserDepartment"/></div>
             <div class="data"><label>专业</label><input type="text" v-model="addUserMajor"/></div>
             <div class="data"><label>电话</label><input type="text" v-model="addUserPhone"/></div>
@@ -242,6 +243,7 @@
         index: 1,
         addUserLendNum: '',
         addUserId: '',
+        addUserName:'',
         addUserDepartment: '',
         addUserMajor: '',
         addUserPhone: '',
@@ -322,6 +324,7 @@
             .post('/systemAdmin/addUser', {
               addUserLendNum: this.addUserLendNum,
               addUserId: this.addUserId,
+              addUserName:this.addUserName,
               addUserDepartment: this.addUserDepartment,
               addUserMajor: this.addUserMajor,
               addUserPhone: this.addUserPhone,
@@ -331,7 +334,7 @@
             })
             .then(successResponse => {
               if (successResponse.data.message == 0) {
-                this.$message.error('借阅号已存在');
+                this.$message.error('借阅号或者用户ID已存在');
               }
               else {
                 this.$message({
@@ -341,6 +344,7 @@
               }
               this.addUserLendNum = '',
                 this.addUserId = '',
+                this.addUserName = '',
                 this.addUserDepartment = '',
                 this.addUserMajor = '',
                 this.addUserPhone = '',
