@@ -5,7 +5,7 @@
         <a @click="go_index" style="cursor: pointer;position: relative;right: 350px;">首页</a>
       </div>
       <div class="out_page">
-        <a @click="go_login" style="cursor: pointer" v-if="this.$store.state.user==undefined">登陆</a>
+        <a @click="go_login" style="cursor: pointer" v-if="this.$store.state.user==undefined">登录</a>
         <a @click="logout" style="cursor: pointer" v-if="this.$store.state.user!=undefined">退出</a>
       </div>
     </div>

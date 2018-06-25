@@ -23,7 +23,7 @@
           <el-input v-model="form.password" type="password" placeholder="请输入密码"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="login">立即登陆</el-button>
+          <el-button type="primary" @click="login">立即登录</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -51,7 +51,6 @@
     },
     methods: {
       login() {
-        this.$message.error('密码或者用户名错误');
         if (this.value == "读者") {
           this.$axios
             .post('/user/login', {
@@ -59,18 +58,19 @@
               password: this.form.password
             })
             .then(successResponse => {
-              var userinfo = successResponse.data.data[0];
               if (successResponse.data.message == "登陆成功") {
+                var userinfo = successResponse.data.data[0];
                 this.$store.dispatch('login', '读者').then(() => {
 
                 })
                 this.$router.push({path: '/user', query: {id: userinfo[0], name: userinfo[1]}})
                 this.$message({
-                  message: '登陆成功',
+                  message: '登录成功',
                   type: 'success'
                 });
+              }else{
+                this.$message.error('密码或者用户名错误');
               }
-
             })
             .catch(failResponse => {
             })
@@ -82,16 +82,19 @@
               password: this.form.password
             })
             .then(successResponse => {
-              if (successResponse.data.message == "登陆成功") {
+              if (successResponse.data.data[0] != null) {
                 this.$store.dispatch('login', '图书管理员').then(() => {
 
                 })
                 var data = successResponse.data.data[0];
                 this.$router.push({path: '/admin', query: {id: data[0],name:data[3]}})
                 this.$message({
-                  message: '登陆成功',
+                  message: '登录成功',
                   type: 'success'
                 });
+              }
+              else{
+                this.$message.error('密码或者用户名错误');
               }
             })
             .catch(failResponse => {
@@ -104,16 +107,19 @@
               password: this.form.password
             })
             .then(successResponse => {
-              if (successResponse.data.message == "登陆成功") {
+              if (successResponse.data.data[0] != null) {
                 this.$store.dispatch('login', '系统管理员').then(() => {
 
                 })
                 var data = successResponse.data.data[0];
                 this.$router.push({path: '/system', query: {id: data[0], name: data[1]}});
                 this.$message({
-                  message: '登陆成功',
+                  message: '登录成功',
                   type: 'success'
                 });
+              }
+              else{
+                this.$message.error('密码或者用户名错误');
               }
             })
             .catch(failResponse => {
